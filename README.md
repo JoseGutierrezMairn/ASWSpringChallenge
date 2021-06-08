@@ -3,7 +3,18 @@ En este repositorio se encuentra una aplicación hecha con el framework spring, 
 procesar las peticiones http de un usuario.
 Se trata de una aplicación que provee una solución de agendamiento de turnos para que 
 los clientes de varios comercios puedan reservar con anticipación un espacio de atención en un 
-servicio específico que presta cada comercio
+servicio específico que presta cada comercio.
+Este repositorio se encuentra dividido por ramas las cuales indican cada funcionalidad de la aplicación, la rama master contiene todas las funcionalidades juntas funcionando en conjunto, al momento de realizar las pruebas asegurese de que esté haciendolo desde la rama master para evitar errores en la ejecución del código.
+para saber en que rama se encuentra puede ejecutar en la carpeta raíz el siguiente comando:
+~~~
+git branch
+~~~
+
+para cambiar de rama puede usar el siguiente comando:
+~~~
+git checkout NOMBRE_DE_LA_RAMA
+~~~
+
 ## Prerrequisitos
 Debemos tener los siguientes programas instalados o cuentas para poder hacer uso de las herramientas:
 ~~~
@@ -18,7 +29,7 @@ Para descargar el proyecto realizaremos los siguientes pasos desde el **Simbolo 
 1. Nos dirigimos a la ubicación donde queremos descargar el proyecto desde el simbolo del sistema.  
 2. Escribimos el siguiente comando para realizar la descarga:  
 ~~~
-git clone https://github.com/JoseGutierrezMairn/AREP-AppSegura.git
+git clone https://github.com/JoseGutierrezMairn/ASWSpringChallenge.git
 ~~~
 3. Esperamos a que el simbolo de sistema nos diga que ya se realizó la descarga  
 4. El proyecto ya se encuentra en nuestros computadores y está listo para ser editado o probado.
