@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.asesoftware.turnos.application.dto.ResponseDTO;
 import com.asesoftware.turnos.application.dto.ServicioDTO;
 import com.asesoftware.turnos.application.entity.ServicioEntity;
 
@@ -28,30 +29,30 @@ public class ServicioController {
 	
 	
 	@GetMapping(path = "/all")
-	public List<ServicioDTO> getAll(){
+	public ResponseDTO getAll(){
 		return servicioService.getAll();
 	}
 	
 	
 	@GetMapping(path = "/consult")
-	public ServicioDTO getServiceById(@RequestParam Integer id) {
+	public ResponseDTO getServiceById(@RequestParam Integer id) {
 		return servicioService.getServiceById(id);
 	}
 	
 	
 	@PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
-	public ServicioDTO createService(@RequestBody ServicioEntity servicioEntity) {
-		return servicioService.createService(servicioEntity);
+	public ResponseDTO createService(@RequestBody ServicioDTO servicio) {
+		return servicioService.createService(servicio);
 	}
 	
 	
 	@PutMapping(path = "/update", consumes = "application/json", produces = "application/json")
-	public ServicioDTO updateService(@RequestBody ServicioEntity servicioEntity) {
-		return servicioService.updateService(servicioEntity);
+	public ResponseDTO updateService(@RequestBody ServicioDTO servicio) {
+		return servicioService.updateService(servicio);
 	}
 	
 	@DeleteMapping(path = "/delete")
-	public void deleteService(@RequestParam Integer id) {
-		servicioService.deleteService(id);
+	public ResponseDTO deleteService(@RequestParam Integer id) {
+		return servicioService.deleteService(id);
 	}
 }

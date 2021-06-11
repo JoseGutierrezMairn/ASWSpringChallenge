@@ -2,17 +2,18 @@ package com.asesoftware.turnos.application.service;
 
 import java.util.List;
 
+import com.asesoftware.turnos.application.dto.ResponseDTO;
 import com.asesoftware.turnos.application.dto.ServicioDTO;
-import com.asesoftware.turnos.application.entity.ServicioEntity;
+
 
 public interface IServicioService {
-	public List<ServicioDTO> getAll();
+	public ResponseDTO getAll();
 	
-	public ServicioDTO getServiceById(Integer id);
+	public ResponseDTO getServiceById(Integer id);
 	
-	public ServicioDTO createService(ServicioEntity servicioEntity);
+	public ResponseDTO createService(ServicioDTO servicio);
 		
-	public ServicioDTO updateService(ServicioEntity servicioEntity);
+	public ResponseDTO updateService(ServicioDTO servicio);
 	
-	public void deleteService(Integer id);
+	public ResponseDTO deleteService(Integer id);
 }

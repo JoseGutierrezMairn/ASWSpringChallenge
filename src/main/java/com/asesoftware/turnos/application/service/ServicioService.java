@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.asesoftware.turnos.application.dto.ResponseDTO;
 import com.asesoftware.turnos.application.dto.ServicioDTO;
+import com.asesoftware.turnos.application.entity.ComercioEntity;
 import com.asesoftware.turnos.application.entity.ServicioEntity;
 import com.asesoftware.turnos.application.mapper.IServicioMapper;
 import com.asesoftware.turnos.application.repositoy.IServicioRepository;
@@ -22,33 +25,67 @@ public class ServicioService implements IServicioService{
 	private IServicioMapper servicioMapper;
 	
 	@Override
-	public List<ServicioDTO> getAll() {
-
-		return servicioMapper.listEntityToDto(servicioRepository.findAll());
+	public ResponseDTO getAll() {
+		List<ServicioEntity> answ = servicioRepository.findAll();
+		ResponseDTO res = answ.size() > 0 ? new ResponseDTO(servicioMapper.listEntityToDto(answ), true, "Ok", HttpStatus.OK ) : new ResponseDTO(null, false, "Failed", HttpStatus.OK);
+		return res;
 	}
 
 	@Override
-	public ServicioDTO getServiceById(Integer id) {
+	public ResponseDTO getServiceById(Integer id) {
 		Optional<ServicioEntity> op = servicioRepository.findById(id);
-		ServicioEntity answ = op.isPresent() ? op.get(): null;
-		return servicioMapper.entityToDto(answ);
+		if(op.isPresent()) {
+			return new ResponseDTO(servicioMapper.entityToDto(op.get()), true, "Ok", HttpStatus.OK);
+		}else {
+			return new ResponseDTO(null, false, "Servicio no encontrado", HttpStatus.OK);
+		}
 	}
 
 	@Override
-	public ServicioDTO updateService(ServicioEntity servicioEntity) {
-		Optional<ServicioEntity> op = servicioRepository.findById(servicioEntity.getIdServicio());
-		ServicioEntity answ = op.isPresent() ? servicioRepository.save(servicioEntity): null;
-		return servicioMapper.entityToDto(answ);
+	public ResponseDTO updateService(ServicioDTO servicio) {
+		
+		try {
+			Optional<ServicioEntity> op = servicioRepository.findById(servicio.getIdServicio());
+			ResponseDTO answ = op.isPresent() ?new ResponseDTO(servicioMapper.entityToDto(servicioRepository.save(servicioMapper.dtoToEntity(servicio))), true, "Ok", HttpStatus.OK): new ResponseDTO(null, true, "Not found", HttpStatus.OK);
+			return answ;
+		}catch (Exception e) {
+			return new ResponseDTO(null, false, "Invalid data", HttpStatus.OK);
+		}
 	}
 
 	@Override
-	public void deleteService(Integer id) {
-		servicioRepository.deleteById(id);
+	public ResponseDTO deleteService(Integer id) {		
+		try {
+			servicioRepository.deleteById(id);
+			return new ResponseDTO(null, true, "deleted", HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseDTO(null, false, "Commerce Not Found", HttpStatus.OK);
+		}
 	}
 
 	@Override
-	public ServicioDTO createService(ServicioEntity servicioEntity) {
-		return servicioMapper.entityToDto(servicioRepository.save(servicioEntity));
+	public ResponseDTO createService(ServicioDTO servicio) {
+		servicio = isPossible(servicio);
+		try {
+			ServicioEntity ce = servicioRepository.save(servicioMapper.dtoToEntity(servicio));
+			return new ResponseDTO(servicioMapper.entityToDto(ce), true, "Ok", HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseDTO(null, true, "Invalid data", HttpStatus.OK);
+		}
+	}
+	
+	
+	
+	
+	
+	private ServicioDTO isPossible(ServicioDTO servicio) {
+		try{
+			servicio = servicioRepository.findById(servicio.getIdServicio()).isPresent() ? null : servicio;
+		}catch (Exception e) {
+			return servicio;
+		}
+		
+		return servicio;
 	}
 	
 }

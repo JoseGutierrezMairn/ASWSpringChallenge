@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.asesoftware.turnos.application.dto.ComercioDTO;
+import com.asesoftware.turnos.application.dto.ResponseDTO;
 import com.asesoftware.turnos.application.entity.ComercioEntity;
 import com.asesoftware.turnos.application.service.IComercioService;
 
@@ -25,32 +26,32 @@ public class ComercioController {
 	
 	
 	@GetMapping(path = "/all")
-	public List<ComercioDTO> getAll(){
+	public ResponseDTO getAll(){
 		return comercioService.getAll();
 	}
 	
 
 	@GetMapping(path = "/consult")
-	public ComercioDTO getCommerceById(@RequestParam Integer id) {
+	public ResponseDTO getCommerceById(@RequestParam Integer id) {
 		return comercioService.getCommerceById(id);
 	}
 	
 	
 	@PostMapping(path = "/create", consumes = "application/json",produces = "application/json")
-	public ComercioDTO createCommerce(@RequestBody ComercioEntity comercioEntity) {
-		return comercioService.createCommerce(comercioEntity);
+	public ResponseDTO createCommerce(@RequestBody ComercioDTO comercio) {
+		return comercioService.createCommerce(comercio);
 	}
 	
 	
 	@PutMapping(path = "/update", consumes = "application/json", produces = "application/json")
-	public ComercioDTO updateCommerce(@RequestBody ComercioEntity comercioEntity) {
-		return comercioService.updateService(comercioEntity);
+	public ResponseDTO updateCommerce(@RequestBody ComercioDTO comercio) {
+		return comercioService.updateService(comercio);
 	}
 	
 	
 	@DeleteMapping(path = "/delete")
-	public void deleteCommerce(@RequestParam Integer id) {
-		comercioService.deleteCommerce(id);
+	public ResponseDTO deleteCommerce(@RequestParam Integer id) {
+		return comercioService.deleteCommerce(id);
 	}
 	
 }
