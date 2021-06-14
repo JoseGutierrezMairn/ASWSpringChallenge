@@ -20,10 +20,10 @@ public class TurnoDTO {
 	@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date fechaTurno;
 	
-	@JsonFormat(shape = Shape.STRING, pattern = "HH:mm")
+	@JsonFormat(shape = Shape.STRING, pattern = "HH:mm", timezone = "America/New_York")
 	private Date horaInicio;
 	
-	@JsonFormat(shape = Shape.STRING, pattern = "HH:mm")
+	@JsonFormat(shape = Shape.STRING, pattern = "HH:mm", timezone = "America/New_York")
 	private Date horaFin;
 	
 	

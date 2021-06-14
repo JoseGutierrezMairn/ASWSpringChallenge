@@ -7,9 +7,9 @@ import com.asesoftware.turnos.application.dto.TurnoDTO;
 
 public interface ITurnoService {
 	
-	public List<TurnoDTO> getTurnByServiceId(Integer serviceId);
+	public ResponseDTO getTurnByServiceId(Integer serviceId);
 	
-	public List<TurnoDTO> findTurnsByCommerceId(Integer commerceId);
+	public ResponseDTO findTurnsByCommerceId(Integer commerceId);
 	
 	
 	public ResponseDTO createTurn(TurnoDTO turno);

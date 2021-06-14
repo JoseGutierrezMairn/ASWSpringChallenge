@@ -26,22 +26,23 @@ public class TurnoController {
 	
 	
 	@GetMapping(path = "/byService")
-	public List<TurnoDTO> getTurnByServiceId(@RequestParam Integer serviceId){
+	public ResponseDTO getTurnByServiceId(@RequestParam Integer serviceId){
 		return turnoService.getTurnByServiceId(serviceId);
 	}
 	
 	
 	@GetMapping(path = "/byCommerce")
-	public List<TurnoDTO> findTurnsByCommerceId(@RequestParam Integer comercioId){
+	public ResponseDTO findTurnsByCommerceId(@RequestParam Integer comercioId){
 		return turnoService.findTurnsByCommerceId(comercioId);
 		
 	}
 	
 	
+	/*
 	@PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
 	public ResponseDTO createTurn(@RequestBody TurnoDTO turno) {
 		return turnoService.createTurn(turno);
-	}
+	}*/
 	
 
 }

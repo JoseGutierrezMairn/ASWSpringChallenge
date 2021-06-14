@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.asesoftware.turnos.application.dto.ResponseDTO;
 import com.asesoftware.turnos.application.dto.TurnoDTO;
+import com.asesoftware.turnos.application.entity.TurnoEntity;
 import com.asesoftware.turnos.application.mapper.ITurnoMapper;
 import com.asesoftware.turnos.application.repositoy.ITurnoRepository;
 
@@ -23,14 +24,16 @@ public class TurnoService implements ITurnoService{
 	private ITurnoMapper turnoMapper;
 	
 	@Override
-	public List<TurnoDTO> getTurnByServiceId(Integer serviceId) {
-		return turnoMapper.listEntityToDto(turnoRepository.findTurnsByService(serviceId));
+	public ResponseDTO getTurnByServiceId(Integer serviceId) {
+		List<TurnoEntity> lis = turnoRepository.findTurnsByService(serviceId);
+		return lis.size() > 0 ? new ResponseDTO(turnoMapper.listEntityToDto(lis), true, "Ok", HttpStatus.OK) : new ResponseDTO(null, true, "No Ok", HttpStatus.OK);
 	}
 
 
 	@Override
-	public List<TurnoDTO> findTurnsByCommerceId(Integer commerceId) {
-		return turnoMapper.listEntityToDto(turnoRepository.findTurnsByCommerceId(commerceId));
+	public ResponseDTO findTurnsByCommerceId(Integer commerceId) {
+		List<TurnoEntity> lis = turnoRepository.findTurnsByService(commerceId);
+		return lis.size() > 0 ? new ResponseDTO(turnoMapper.listEntityToDto(lis), true, "Ok", HttpStatus.OK) : new ResponseDTO(null, true, "No Ok", HttpStatus.OK);
 	}
 
 
