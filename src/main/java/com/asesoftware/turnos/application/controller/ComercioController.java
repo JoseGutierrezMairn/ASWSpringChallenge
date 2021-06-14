@@ -54,4 +54,7 @@ public class ComercioController {
 		return comercioService.deleteCommerce(id);
 	}
 	
+	
+	
+	
 }

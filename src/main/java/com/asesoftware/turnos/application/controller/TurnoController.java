@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.condition.ConsumesRequestCondition;
 
+import com.asesoftware.turnos.application.dto.ResponseDTO;
 import com.asesoftware.turnos.application.dto.TurnoDTO;
 import com.asesoftware.turnos.application.entity.TurnoEntity;
 import com.asesoftware.turnos.application.service.ITurnoService;
@@ -38,8 +39,9 @@ public class TurnoController {
 	
 	
 	@PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
-	public TurnoDTO createTurn(@RequestBody TurnoDTO turno) {
-		return null;
+	public ResponseDTO createTurn(@RequestBody TurnoDTO turno) {
+		return turnoService.createTurn(turno);
 	}
+	
 
 }

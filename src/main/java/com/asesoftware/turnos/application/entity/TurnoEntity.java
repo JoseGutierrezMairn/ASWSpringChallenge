@@ -1,6 +1,6 @@
 package com.asesoftware.turnos.application.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
 
 
@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Data;
 
@@ -29,14 +31,17 @@ public class TurnoEntity {
 	
 	
 	@Column(name = "fecha_turno")
+	@Temporal(TemporalType.DATE)
 	private Date fechaTurno;
 	
 	
 	@Column(name = "hora_inicio")
-	private Time horaInicio;
+	@Temporal(TemporalType.TIME)
+	private Date horaInicio;
 	
 	@Column(name = "hora_fin")
-	private Time horaFin;
+	@Temporal(TemporalType.TIME)
+	private Date horaFin;
 	
 	
 	@Column(name = "estado")

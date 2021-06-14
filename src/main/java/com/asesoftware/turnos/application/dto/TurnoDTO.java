@@ -1,7 +1,9 @@
 package com.asesoftware.turnos.application.dto;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import lombok.Data;
 
@@ -15,14 +17,14 @@ public class TurnoDTO {
 
 	private Integer idServicio;
 	
-
+	@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date fechaTurno;
 	
-
-	private Time horaInicio;
+	@JsonFormat(shape = Shape.STRING, pattern = "HH:mm")
+	private Date horaInicio;
 	
-
-	private Time horaFin;
+	@JsonFormat(shape = Shape.STRING, pattern = "HH:mm")
+	private Date horaFin;
 	
 	
 	private String estado;

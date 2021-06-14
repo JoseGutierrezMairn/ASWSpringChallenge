@@ -3,8 +3,10 @@ package com.asesoftware.turnos.application.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.asesoftware.turnos.application.dto.ResponseDTO;
 import com.asesoftware.turnos.application.dto.TurnoDTO;
 import com.asesoftware.turnos.application.mapper.ITurnoMapper;
 import com.asesoftware.turnos.application.repositoy.ITurnoRepository;
@@ -29,5 +31,12 @@ public class TurnoService implements ITurnoService{
 	@Override
 	public List<TurnoDTO> findTurnsByCommerceId(Integer commerceId) {
 		return turnoMapper.listEntityToDto(turnoRepository.findTurnsByCommerceId(commerceId));
+	}
+
+
+	@Override
+	public ResponseDTO createTurn(TurnoDTO turno) {
+		return new ResponseDTO(turnoMapper.entityToDto(turnoRepository.save(turnoMapper.dtoToEntity(turno))), true, "ok", HttpStatus.OK);
+		
 	}
 }
