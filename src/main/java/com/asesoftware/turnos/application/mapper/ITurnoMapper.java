@@ -11,6 +11,8 @@ import com.asesoftware.turnos.application.entity.TurnoEntity;
 @Mapper(componentModel = "spring")
 public interface ITurnoMapper {
 	
+	
+	
 	public List<TurnoDTO> listEntityToDto (List<TurnoEntity> listEntity);
 	public TurnoDTO entityToDto (TurnoEntity entity);
 	public TurnoEntity dtoToEntity (TurnoDTO dto);
