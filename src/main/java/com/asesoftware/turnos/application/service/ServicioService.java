@@ -3,10 +3,13 @@ package com.asesoftware.turnos.application.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.asesoftware.turnos.application.controller.TurnoController;
 import com.asesoftware.turnos.application.dto.ResponseDTO;
 import com.asesoftware.turnos.application.dto.ServicioDTO;
 import com.asesoftware.turnos.application.entity.ComercioEntity;
@@ -24,10 +27,13 @@ public class ServicioService implements IServicioService{
 	@Autowired
 	private IServicioMapper servicioMapper;
 	
+	
+	private Logger log = LoggerFactory.getLogger(ServicioService.class);
+	
 	@Override
 	public ResponseDTO getAll() {
 		List<ServicioEntity> answ = servicioRepository.findAll();
-		ResponseDTO res = answ.size() > 0 ? new ResponseDTO(servicioMapper.listEntityToDto(answ), true, "Ok", HttpStatus.OK ) : new ResponseDTO(null, false, "Failed", HttpStatus.OK);
+		ResponseDTO res = answ.size() > 0 ? getResponseDTOList(true, "Ok", answ): getResponseDTOList(true, "Ok", null);
 		return res;
 	}
 
@@ -35,9 +41,9 @@ public class ServicioService implements IServicioService{
 	public ResponseDTO getServiceById(Integer id) {
 		Optional<ServicioEntity> op = servicioRepository.findById(id);
 		if(op.isPresent()) {
-			return new ResponseDTO(servicioMapper.entityToDto(op.get()), true, "Ok", HttpStatus.OK);
+			return getResponseDTO(true, "Ok", op.get());
 		}else {
-			return new ResponseDTO(null, false, "Servicio no encontrado", HttpStatus.OK);
+			return getResponseDTO(false, "Servicio no encontrado", null);
 		}
 	}
  
@@ -46,10 +52,10 @@ public class ServicioService implements IServicioService{
 		
 		try {
 			Optional<ServicioEntity> op = servicioRepository.findById(servicio.getIdServicio());
-			ResponseDTO answ = op.isPresent() ?new ResponseDTO(servicioMapper.entityToDto(servicioRepository.save(servicioMapper.dtoToEntity(servicio))), true, "Ok", HttpStatus.OK): new ResponseDTO(null, true, "Not found", HttpStatus.OK);
+			ResponseDTO answ = op.isPresent() ?  getResponseDTO(true, "Ok", servicioRepository.save(servicioMapper.dtoToEntity(servicio))): getResponseDTO(false, "Not found", null);
 			return answ;
 		}catch (Exception e) {
-			return new ResponseDTO(null, false, "Invalid data", HttpStatus.OK);
+			return getResponseDTO(false, "Invalid data", null);
 		}
 	}
 
@@ -57,9 +63,9 @@ public class ServicioService implements IServicioService{
 	public ResponseDTO deleteService(Integer id) {		
 		try {
 			servicioRepository.deleteById(id);
-			return new ResponseDTO(null, true, "deleted", HttpStatus.OK);
+			return getResponseDTO(true, "Deleted", null);
 		}catch (Exception e) {
-			return new ResponseDTO(null, false, "Commerce Not Found", HttpStatus.OK);
+			return getResponseDTO(false, "Servicio no encontrado", null);
 		}
 	}
 
@@ -68,9 +74,9 @@ public class ServicioService implements IServicioService{
 		servicio = isPossible(servicio);
 		try {
 			ServicioEntity ce = servicioRepository.save(servicioMapper.dtoToEntity(servicio));
-			return new ResponseDTO(servicioMapper.entityToDto(ce), true, "Ok", HttpStatus.OK);
+			return getResponseDTO(true, "Ok", ce);
 		}catch (Exception e) {
-			return new ResponseDTO(null, true, "Invalid data", HttpStatus.OK);
+			return getResponseDTO(false, "Invalid data", null);
 		}
 	}
 	
@@ -86,6 +92,36 @@ public class ServicioService implements IServicioService{
 		}
 		
 		return servicio;
+	}
+	
+	
+	private ResponseDTO getResponseDTOList(boolean ok, String message, List<ServicioEntity> answ) {
+		ResponseDTO response;
+		log.info("En GetResponseDTOList");
+		log.info("valor ok {}", ok);
+		if(ok) {
+			log.info("En condicional ok: true");
+			response =  new ResponseDTO(servicioMapper.listEntityToDto(answ), true, message, HttpStatus.OK ); 
+		}else {
+			log.info("En condicional ok: false");
+			response = new ResponseDTO(null, true, message, HttpStatus.OK);
+		}
+		return response;
+	}
+	
+	
+	private ResponseDTO getResponseDTO(boolean ok, String message, ServicioEntity answ) {
+		ResponseDTO response;
+		log.info("En GetResponseDTO");
+		log.info("valor ok {}", ok);
+		if(ok) {
+			log.info("En condicional ok: true");
+			response =  new ResponseDTO(servicioMapper.entityToDto(answ), true, message, HttpStatus.OK ); 
+		}else {
+			log.info("En condicional ok: false");
+			response = new ResponseDTO(null, true, message, HttpStatus.OK);
+		}
+		return response;
 	}
 	
 }

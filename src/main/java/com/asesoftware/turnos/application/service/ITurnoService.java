@@ -12,7 +12,7 @@ public interface ITurnoService {
 	public ResponseDTO findTurnsByCommerceId(Integer commerceId);
 	
 	
-	public ResponseDTO createTurn(TurnoDTO turno);
+	//public ResponseDTO createTurn(TurnoDTO turno);
 	
 	
 }
